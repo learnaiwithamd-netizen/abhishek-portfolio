@@ -124,7 +124,7 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; }
   border-bottom-color: var(--hairline);
 }
 .nav-name { letter-spacing: 0.2em; }
-.nav-links { display: flex; gap: clamp(1rem, 3vw, 2.5rem); }
+.nav-links { display: flex; align-items: center; gap: clamp(1rem, 3vw, 2.5rem); }
 .nav-link {
   position: relative;
   color: var(--bone-dim);
@@ -147,6 +147,19 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; }
 .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
 .nav-link--accent { color: var(--signal); }
 .nav-link--accent:hover { color: var(--signal); }
+
+.nav-resume {
+  color: var(--signal);
+  border: 1px solid rgba(255, 77, 18, 0.5);
+  padding: 0.45rem 0.85rem;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  white-space: nowrap;
+}
+.nav-resume:hover {
+  background: var(--signal);
+  border-color: var(--signal);
+  color: var(--ink);
+}
 
 .nav-clock {
   display: flex;
@@ -251,6 +264,10 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; }
 }
 .btn-solid { background: var(--bone); color: var(--ink); }
 .btn-solid:hover { background: var(--signal); border-color: var(--signal); color: var(--ink); }
+.btn-signal { background: var(--signal); border-color: var(--signal); color: var(--ink); }
+.btn-signal:hover { background: var(--bone); border-color: var(--bone); }
+.btn-signal .btn-arrow { transition: transform 0.3s ease; }
+.btn-signal:hover .btn-arrow { transform: translateY(3px); }
 .btn-ghost { border-color: var(--hairline); color: var(--bone-dim); }
 .btn-ghost:hover { border-color: var(--signal); color: var(--signal); }
 .btn-arrow { font-family: var(--font-sans); }
@@ -578,8 +595,11 @@ section { padding: clamp(5rem, 12vh, 9rem) var(--pad); }
 @media (max-width: 640px) {
   .nav { padding: 0.9rem 1.25rem; }
   .nav-clock { display: none; }
-  .nav-links { gap: 1rem; }
+  .nav-links { gap: 1rem; align-items: center; }
   .nav-link { font-size: 0.65rem; }
+  /* keep the resume CTA on screen: drop secondary links on phones */
+  .nav-link[href="#approach"], .nav-link[href="#route"] { display: none; }
+  .nav-resume { font-size: 0.65rem; padding: 0.4rem 0.7rem; }
   .corner-tr { display: none; }
   .kicker-rule { display: none; }
   .hero-title { max-width: none; }

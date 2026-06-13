@@ -45,6 +45,47 @@
     }
   });
 
+  /* ---------- scrollspy: highlight the in-view section's nav link ---------- */
+  var spyLinks = Array.prototype.slice.call(document.querySelectorAll('.nav-link[href^="#"]'));
+  var spy = spyLinks
+    .map(function (link) {
+      var sec = document.querySelector(link.getAttribute("href"));
+      return sec ? { link: link, sec: sec } : null;
+    })
+    .filter(Boolean);
+
+  var activeLink = undefined;
+  function setActive(link) {
+    if (link === activeLink) return;
+    activeLink = link;
+    spy.forEach(function (item) {
+      item.link.classList.toggle("is-active", item.link === link);
+    });
+  }
+
+  // A thin detection band sits ~40% down the viewport. Whichever section
+  // straddles that band is "active"; the browser computes the viewport
+  // internally, so this needs no innerHeight read and survives smooth scroll
+  // and instant jumps alike. In the hero (no section in the band) nothing lights.
+  if (spy.length && "IntersectionObserver" in window) {
+    var io = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (e) {
+          for (var i = 0; i < spy.length; i++) {
+            if (spy[i].sec === e.target) { spy[i].inBand = e.isIntersecting; break; }
+          }
+        });
+        var current = null;
+        for (var j = 0; j < spy.length; j++) {
+          if (spy[j].inBand) current = spy[j].link;
+        }
+        setActive(current);
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+    );
+    spy.forEach(function (item) { io.observe(item.sec); });
+  }
+
   /* ---------- boot sequence → hero reveal ---------- */
   var boot = document.getElementById("boot");
   var bootStatus = document.getElementById("bootStatus");

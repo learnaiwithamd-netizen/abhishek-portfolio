@@ -145,8 +145,10 @@ h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; }
 }
 .nav-link:hover { color: var(--bone); }
 .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
-.nav-link--accent { color: var(--signal); }
-.nav-link--accent:hover { color: var(--signal); }
+/* active section — set by scrollspy in main.js */
+.nav-link.is-active { color: var(--signal); }
+.nav-link.is-active::after { transform: scaleX(1); transform-origin: left; }
+.nav-link.is-active:hover { color: var(--signal); }
 
 .nav-resume {
   color: var(--signal);
